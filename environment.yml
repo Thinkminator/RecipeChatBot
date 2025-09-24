@@ -1,0 +1,35 @@
+name: RecipeChatBotCPU
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - pytorch
+  - torchvision
+  - torchaudio
+  - cpuonly            # ensures CPU-only PyTorch build when using pytorch channel
+  - portaudio
+  - ffmpeg
+  - git
+  - jupyter
+  - jupyterlab
+  - pip
+  - pip:
+      - tensorflow==2.13.0
+      - gpt4all==1.0.10
+      - SpeechRecognition
+      - gTTS
+      - pyttsx3
+      - openai
+      - python-dotenv
+      - pydub
+      - transformers
+      - datasets
+      - huggingface_hub
+      - ttkthemes
