@@ -1,4 +1,4 @@
-name: RecipeChatBotCPU
+name: RecipeChatBot
 channels:
   - pytorch
   - conda-forge
@@ -13,8 +13,9 @@ dependencies:
   - pytorch
   - torchvision
   - torchaudio
-  - cpuonly            # ensures CPU-only PyTorch build when using pytorch channel
+  - cpuonly            
   - portaudio
+  - pyaudio            
   - ffmpeg
   - git
   - jupyter

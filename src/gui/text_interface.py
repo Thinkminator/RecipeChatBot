@@ -6,6 +6,7 @@ from src.core.nlu import find_dish_in_text
 from src.core.knowledge import get_recipe
 from src.core.huggingface_api import query_huggingface
 from src.core.custom_llm import generate_recipe_from_ingredients
+from src.gui.mode_selection_ui import run_mode_selection_ui
 
 def run_text_interface(mode):
     engine = pyttsx3.init()
@@ -48,6 +49,10 @@ def run_text_interface(mode):
         if text:
             engine.say(text)
             engine.runAndWait()
+    
+    def on_back():
+        window.destroy()
+        run_mode_selection_ui()
 
     window = tk.Tk()
     window.title(f"Recipe ChatBot - Text Interface ({mode.replace('_', ' ').title()})")
@@ -79,6 +84,9 @@ def run_text_interface(mode):
     
     speak_button = tk.Button(button_frame, text="Speak", font=("Arial", 12, "bold"), command=on_speak, state=tk.DISABLED)
     speak_button.pack(fill=tk.X)
+
+    back_btn = tk.Button(button_frame, text="Back", font=("Arial", 12, "bold"), command=on_back)
+    back_btn.pack(side=tk.LEFT, padx=8)
     
     window.mainloop()
 

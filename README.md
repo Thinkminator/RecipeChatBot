@@ -80,8 +80,8 @@ RecipeChatBot/
 ## Quick Setup
 ### 1. Create & Activate Recommended Environment
 ```sh
-conda env create -f environment_cpu.yml
-conda activate RecipeChatBotCPU
+conda env create -f environment.yml
+conda activate RecipeChatBot
 ```
 
 ### 2. Install PyAudio
