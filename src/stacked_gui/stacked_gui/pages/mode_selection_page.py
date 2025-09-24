@@ -1,0 +1,33 @@
+
+from tkinter import ttk
+from .base_page import BasePage
+
+class ModeSelectionPage(BasePage):
+    def __init__(self, parent, app):
+        super().__init__(parent, app)
+        self.title_var.set("Mode Selection")
+
+        body = ttk.Frame(self)
+        body.pack(expand=True)
+
+        ttk.Label(body, text="Choose model mode:", font=("Segoe UI", 13)).pack(pady=8)
+
+        btns = ttk.Frame(body)
+        btns.pack(pady=10)
+
+        def go(mode):
+            self.app.state["mode"] = mode
+            self.app.show("InputTypePage", mode=mode)
+
+        modes = [
+            ("Existing Recipe", "existing_recipe"),
+            ("HuggingFace", "huggingface"),
+            ("Custom Model", "custom_model"),
+            ("Task 2", "task2"),
+        ]
+        for label, mode in modes:
+            ttk.Button(btns, text=label, width=24, command=lambda m=mode: go(m)).pack(pady=6)
+
+    def on_show(self, **kwargs):
+        # Disable Back on root page
+        self.set_back_enabled(False)
