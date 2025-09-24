@@ -59,7 +59,7 @@ RecipeChatBot/
 │  │  ├─ custom_llm.py 
 │  │  ├─ knowledge.py            # Recipe lookup, file reading
 │  │  ├─ huggingface_api,py
-│  │  ├─ llm_adapter.py          # Task 2
+│  │  ├─ llm_adapter.py          # Task 2 multi-turn chat
 │  │  └─ utils.py                # Helper functions (logging, config loading) TODO
 │  ├─ evaluation/
 │  │  ├─ __init__.py
@@ -68,7 +68,7 @@ RecipeChatBot/
 │  └─ scripts/
 │     ├─ __init__.py
 │     ├─ run_ui.py               # Script to launch the main UI (mode_selection_ui)
-│     ├─ run_terminal_chat.py   # CLI chat interface (optional)
+│     ├─ run_terminal_chat.py   # CLI chat interface
 │     └─ download_models.py     # Scripts to download large models if needed
 ├─ tests/
 │  ├─ test_nlu.py               # Unit tests for NLU functions
