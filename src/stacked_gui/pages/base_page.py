@@ -3,19 +3,19 @@ import tkinter as tk
 from tkinter import ttk
 
 class BasePage(ttk.Frame):
-    """Base page with a standard header and Back button."""
+    """Base page with a standard self.header and Back button."""
     def __init__(self, parent, app):
         super().__init__(parent)
         self.app = app
 
-        header = ttk.Frame(self)
-        header.pack(fill="x", padx=10, pady=(10, 0))
+        self.header = ttk.Frame(self)
+        self.header .pack(fill="x", padx=10, pady=(10, 0))
 
-        self.back_btn = ttk.Button(header, text="⟵ Back", command=self.app.back)
+        self.back_btn = ttk.Button(self.header , text="⟵ Back", command=self.app.back)
         self.back_btn.pack(side="left")
 
         self.title_var = tk.StringVar(value="")
-        ttk.Label(header, textvariable=self.title_var, font=("Segoe UI", 16)).pack(side="left", padx=10)
+        ttk.Label(self.header , textvariable=self.title_var, font=("Segoe UI", 16)).pack(side="left", padx=10)
 
         ttk.Separator(self).pack(fill="x", padx=10, pady=10)
 
