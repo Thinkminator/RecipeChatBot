@@ -6,14 +6,15 @@ Run:  python app.py
 """
 import tkinter as tk
 from tkinter import ttk
-from pages import ModeSelectionPage, InputTypePage, TextPage, SpeechPage
+from pages import ModeSelectionPage, InputTypePage, TextPage, SpeechPage, ImagePage
 
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Recipe Chatbot")
         self.geometry("600x560")
-        self.minsize(720, 520)
+        self.minsize(600, 560)
+        self.maxsize(600, 560) 
 
         # Shared global state (selected mode, etc.)
         self.state = {"mode": None}
@@ -29,7 +30,7 @@ class App(tk.Tk):
         self.current = None
 
         # Register pages
-        for P in (ModeSelectionPage, InputTypePage, TextPage, SpeechPage):
+        for P in (ModeSelectionPage, InputTypePage, TextPage, SpeechPage, ImagePage):
             page = P(self.container, self)
             self.pages[P.__name__] = page
             page.grid(row=0, column=0, sticky="nsew")

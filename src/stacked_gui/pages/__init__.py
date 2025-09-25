@@ -4,6 +4,7 @@ from .mode_selection_page import ModeSelectionPage
 from .input_type_page import InputTypePage
 from .text_page import TextPage
 from .speech_page import SpeechPage
+from .image_page import ImagePage
 
 __all__ = [
     "BasePage",
@@ -11,4 +12,5 @@ __all__ = [
     "InputTypePage",
     "TextPage",
     "SpeechPage",
+    "ImagePage",
 ]

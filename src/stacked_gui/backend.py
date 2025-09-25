@@ -24,6 +24,7 @@ try:
     from src.core.knowledge import get_recipe
     from src.core.huggingface_api import query_huggingface
     from src.core.custom_llm import generate_recipe_from_ingredients
+    from src.core.vlm import infer_dish_from_image
 except ModuleNotFoundError as e:
     # As a convenience, also try without the 'src.' prefix in case your package
     # is installed directly as 'core'.
@@ -32,6 +33,7 @@ except ModuleNotFoundError as e:
         from core.knowledge import get_recipe
         from core.huggingface_api import query_huggingface
         from core.custom_llm import generate_recipe_from_ingredients
+        from core.vlm import infer_dish_from_image
     except ModuleNotFoundError:
         raise ImportError(
             "Could not import your backend modules. Make sure either:\n"
