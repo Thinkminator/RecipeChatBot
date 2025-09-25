@@ -1,8 +1,7 @@
-
 """
 backend.py (strict, with helpful path handling)
 
-Fixes "No module named 'src'" by searching upward for a 'src' folder and
+Fixes "No module named 'src'" by searching upward for a 'src' directory and
 adding its parent to sys.path at runtime. Then imports your real modules.
 """
 
@@ -25,6 +24,8 @@ try:
     from src.core.huggingface_api import query_huggingface
     from src.core.custom_llm import generate_recipe_from_ingredients
     from src.core.vlm import infer_dish_from_image
+    from src.core.llm_adapter import gpt4all_model_list, LLMInterface
+    from gpt4all import GPT4All
 except ModuleNotFoundError as e:
     # As a convenience, also try without the 'src.' prefix in case your package
     # is installed directly as 'core'.
@@ -34,6 +35,8 @@ except ModuleNotFoundError as e:
         from core.huggingface_api import query_huggingface
         from core.custom_llm import generate_recipe_from_ingredients
         from core.vlm import infer_dish_from_image
+        from gpt4all import GPT4All
+        from src.core.llm_adapter import gpt4all_model_list, LLMInterface
     except ModuleNotFoundError:
         raise ImportError(
             "Could not import your backend modules. Make sure either:\n"
@@ -43,9 +46,44 @@ except ModuleNotFoundError as e:
             "If your package name is different, update the import lines in backend.py accordingly."
         ) from e
 
+_gpt4all_instance = None
 
-def generate_bot_reply(mode: str, user_text: str) -> str:
+def _get_gpt4all_instance(app_state=None):
+    global _gpt4all_instance
+    if GPT4All is None or LLMInterface is None:
+        raise RuntimeError("GPT4All or LLMInterface not available")
+
+    params = app_state.get("llm_params", {}) if app_state else {}
+    model_name = params.get("model")
+    if not model_name:
+        raise RuntimeError("No GPT4All model selected")
+    print(f"DEBUG: Using GPT4All model: {model_name}")
+
+    try:
+        model = GPT4All(model_name)  # This will download if not found
+    except Exception as e:
+        raise RuntimeError(f"Failed to load or download GPT4All model '{model_name}': {e}")
+
+    generate_kwargs = {
+        "temp": params.get("temp", 0.7),
+        "top_k": params.get("top_k", 40),
+        "top_p": params.get("top_p", 0.9),
+        "max_tokens": params.get("max_tokens", 200),
+        "repeat_penalty": params.get("repeat_penalty", 1.18),
+    }
+
+    _gpt4all_instance = LLMInterface(
+        model,
+        max_turns=params.get("max_turns", 100),
+        global_prompt=params.get("global_prompt", "You are a helpful cooking assistant, return only recipe in 1 paragraph."),
+        negative_prompt=params.get("negative_prompt", "Avoid: Too long"),
+        **generate_kwargs
+    )
+    return _gpt4all_instance
+
+def generate_bot_reply(mode: str, user_text: str, *, app_state: dict = None) -> str:
     """Route to your real backends based on selected mode."""
+    print(f"DEBUG: generate_bot_reply called with mode={mode}, app_state keys={list(app_state.keys()) if app_state else None}")
     mode = (mode or "").strip() or "existing_recipe"
     if mode == "existing_recipe":
         dish = find_dish_in_text(user_text)
@@ -56,8 +94,13 @@ def generate_bot_reply(mode: str, user_text: str) -> str:
         return query_huggingface(user_text)
     elif mode == "custom_model":
         return generate_recipe_from_ingredients(user_text)
+    elif mode == "llm_interface":
+        try:
+            llm = _get_gpt4all_instance(app_state=app_state)
+            return llm.generate(user_text)
+        except Exception as e:
+            return f"Error with GPT4All model: {e}"
     else:
-        # Task 2 or other experimental modes — delegate/adjust as you wish
         return f"[{mode}] {user_text}"
 
 

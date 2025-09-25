@@ -23,7 +23,7 @@ dependencies:
   - pip
   - pip:
       - tensorflow==2.13.0
-      - gpt4all==1.0.10
+      - gpt4all==2.8.2
       - SpeechRecognition
       - gTTS
       - pyttsx3
@@ -34,3 +34,4 @@ dependencies:
       - datasets
       - huggingface_hub
       - ttkthemes
+      - pillow

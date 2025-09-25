@@ -94,7 +94,11 @@ class SpeechPage(BasePage):
 
         self.add_msg("You", text, "user")
 
-        reply = generate_bot_reply(self.app.state.get("mode"), text)
+        mode = self.app.state.get("mode")
+        if mode == "llm_interface":
+            reply = generate_bot_reply(mode, text, app_state=self.app.state)
+        else:
+            reply = generate_bot_reply(mode, text)
         self.add_msg("Bot", reply, "bot")
         self._last_reply = reply
         self.speak_btn.state(["!disabled"])

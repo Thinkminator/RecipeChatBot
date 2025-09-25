@@ -102,7 +102,11 @@ class ImagePage(BasePage):
 
                 prompt = f"How to cook {caption}?"
 
-                response = generate_bot_reply(self.app.state.get("mode"), prompt)
+                mode = self.app.state.get("mode")
+                if mode == "llm_interface":
+                    response = generate_bot_reply(mode, prompt, app_state=self.app.state)
+                else:
+                    response = generate_bot_reply(mode, prompt)
 
                 self.chat.config(state="normal")
                 self.chat.insert(tk.END, f"Bot (image understanding): I think this is: {caption}\n", "bot")
