@@ -11,6 +11,8 @@ except Exception:
 class SpeechPage(BasePage):
     def __init__(self, parent, app):
         super().__init__(parent, app)
+        self.clear_btn = ttk.Button(self.header, text="🧹 Clear", command=self.on_clear)
+        self.clear_btn.pack(side="right")  # top-right of the header row
         self.title_var.set("Speech Interface")
 
         row = ttk.Frame(self)
@@ -111,3 +113,20 @@ class SpeechPage(BasePage):
             ok = speak_text(self._last_reply)
             if not ok:
                 messagebox.showwarning("TTS not available", "pyttsx3 not installed.")
+
+    def on_clear(self):
+    # (optional) stop any ongoing speech and reset the Speak button
+       
+        if self.speaking and self.engine:
+            self.engine.stop()
+       
+        self._stop_speaking_cleanup()  # resets flags/button text safely
+
+        # clear the chat history
+        self.chat.config(state="normal")
+        self.chat.delete("1.0", tk.END)
+        self.chat.config(state="disabled")
+
+        # forget the last reply so Speak is disabled until a new reply arrives
+        self._last_reply = None
+        self.speak_btn.state(["disabled"])
