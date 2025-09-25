@@ -21,7 +21,7 @@ for base in candidates:
 try:
     from src.core.nlu import find_dish_in_text
     from src.core.knowledge import get_recipe
-    from src.core.huggingface_api import query_huggingface
+    from src.core.themealdb_api import query_themealdb
     from src.core.custom_llm import generate_recipe_from_ingredients
     from src.core.vlm import infer_dish_from_image
     from src.core.llm_adapter import gpt4all_model_list, LLMInterface
@@ -32,7 +32,7 @@ except ModuleNotFoundError as e:
     try:
         from core.nlu import find_dish_in_text
         from core.knowledge import get_recipe
-        from core.huggingface_api import query_huggingface
+        from core.themealdb_api import query_themealdb
         from core.custom_llm import generate_recipe_from_ingredients
         from core.vlm import infer_dish_from_image
         from gpt4all import GPT4All
@@ -83,15 +83,14 @@ def _get_gpt4all_instance(app_state=None):
 
 def generate_bot_reply(mode: str, user_text: str, *, app_state: dict = None) -> str:
     """Route to your real backends based on selected mode."""
-    print(f"DEBUG: generate_bot_reply called with mode={mode}, app_state keys={list(app_state.keys()) if app_state else None}")
     mode = (mode or "").strip() or "existing_recipe"
     if mode == "existing_recipe":
         dish = find_dish_in_text(user_text)
         if dish:
             return get_recipe(dish)
         return "Sorry, I couldn't find a matching recipe."
-    elif mode == "huggingface":
-        return query_huggingface(user_text)
+    elif mode == "themealdb":
+        return query_themealdb(user_text)
     elif mode == "custom_model":
         return generate_recipe_from_ingredients(user_text)
     elif mode == "llm_interface":

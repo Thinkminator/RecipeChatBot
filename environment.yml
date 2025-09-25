@@ -10,19 +10,18 @@ dependencies:
   - matplotlib
   - seaborn
   - scikit-learn
-  - pytorch
-  - torchvision
-  - torchaudio
-  - cpuonly            
+  - pytorch::pytorch
+  - pytorch::torchvision
+  - pytorch::torchaudio
+  - cpuonly
   - portaudio
-  - pyaudio            
+  - pyaudio
   - ffmpeg
   - git
   - jupyter
-  - jupyterlab
   - pip
+  - pillow
   - pip:
-      - tensorflow==2.13.0
       - gpt4all==2.8.2
       - SpeechRecognition
       - gTTS
@@ -32,6 +31,5 @@ dependencies:
       - pydub
       - transformers
       - datasets
-      - huggingface_hub
+      - huggingface_hub==0.25.0
       - ttkthemes
-      - pillow

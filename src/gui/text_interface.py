@@ -4,7 +4,7 @@ import pyttsx3
 
 from src.core.nlu import find_dish_in_text
 from src.core.knowledge import get_recipe
-from src.core.huggingface_api import query_huggingface
+from core.themealdb_api import query_huggingface
 from src.core.custom_llm import generate_recipe_from_ingredients
 from src.gui.mode_selection_ui import run_mode_selection_ui
 

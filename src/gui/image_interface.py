@@ -120,7 +120,7 @@ def run_image_interface(mode):
                     else:
                         response = "Sorry, I couldn't find a matching recipe."
                 elif mode == "huggingface":
-                    from src.core.huggingface_api import query_huggingface
+                    from core.themealdb_api import query_huggingface
                     response = query_huggingface(prompt)
                 elif mode == "custom_model":
                     from src.core.custom_llm import generate_recipe_from_ingredients

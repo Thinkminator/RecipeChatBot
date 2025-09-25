@@ -27,7 +27,7 @@ class ModeSelectionPage(BasePage):
 
         modes = [
             ("Existing Recipe", "existing_recipe"),
-            ("HuggingFace", "huggingface"),
+            ("TheMealDB", "themealdb"),
             ("Custom Model", "custom_model"),
             ("LLM Interface", "llm_interface"),
         ]

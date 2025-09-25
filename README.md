@@ -18,20 +18,28 @@ The app supports both text and speech interfaces. The architecture separates GUI
 
 ## Features
 ### 1. Dictionary Searching
-- Accepts a recipe request from the user (text or speech)
+- Accepts a recipe request from the user (text or speech or image)
 - Use [nlu.py](src\core\nlu.py) to extract dish name from request
 - With [knowledge.py](src\core\knowledge.py) find and display respective recipe from [recipe dataset](data\recipes)
 - Presents the recipe in a simple GUI and allows voice I/O
 
 ### 2. Hugging Face API Accessing
-- Accepts a recipe request from the user (text or speech)
-- Use [huggingface_api.py](src\core\huggingface_api.py) to pass the prompt to online Deepseek model via API
+- Accepts a recipe request from the user (text or speech or image)
+- Use [themealdb_api.py](src\core\themealdb_api.py) to pass the prompt to online Deepseek model via API
 - Presents the recipe in a simple GUI and allows voice I/O
 
 ### 3. Pretrained Model Loading
-- Accepts a recipe request from the user (text or speech) via [custom_llm.py](src\core\custom_llm.py)
+- Accepts a recipe request from the user (text or speech or image) via [custom_llm.py](src\core\custom_llm.py)
 - Uses a pretrained recipe-generation model to generate structured recipe text
 - Presents the recipe in a simple GUI and allows voice I/O
+
+### 4. Task 2
+- Accepts a recipe request from the user (text or speech or image) via [custom_llm.py](src\core\custom_llm.py)
+- TODO
+- Presents the recipe in a simple GUI and allows voice I/O
+
+### Extra. VLM-Integrated Prompting
+- Accept recipes searching with [pictures](src\core\vlm.py)
 
 ### 4. Task 2
 TODO
@@ -41,13 +49,12 @@ TODO
 RecipeChatBot/
 ├─ README.md                      # Project overview, setup, usage instructions
 ├─ environment.yml                # Conda environment config for dependencies
-├─ config.yaml                   # Config file for paths - TODO
 ├─ data/
 │  ├─ recipes/                   # Recipe text files 
-│  └─ raw/                      # Raw datasets if any (optional)
+│  └─ images/                    # Pictures for VLM Testing
 ├─ src/
 │  ├─ __init__.py                # Marks src as a package
-│  ├─ gui/
+│  ├─ stacked_gui/
 │  │  ├─ __init__.py
 │  │  ├─ mode_selection_ui.py   # Main UI: select mode (recipe, HF, Custom Model, Task2)
 │  │  ├─ input_type_ui.py        # UI: select input type (Text or Speech)
@@ -58,7 +65,7 @@ RecipeChatBot/
 │  │  ├─ nlu.py                  # Natural Language Understanding (dish extraction)
 │  │  ├─ custom_llm.py 
 │  │  ├─ knowledge.py            # Recipe lookup, file reading
-│  │  ├─ huggingface_api,py
+│  │  ├─ themealdb_api,py
 │  │  ├─ llm_adapter.py          # Task 2 multi-turn chat
 │  │  └─ utils.py                # Helper functions (logging, config loading) TODO
 │  ├─ evaluation/
@@ -84,32 +91,20 @@ conda env create -f environment.yml
 conda activate RecipeChatBot
 ```
 
-### 2. Install PyAudio
-```sh
-conda install -c conda-forge pyaudio
-```
-
-### 3. Running the App
+### 2. Running the App
 Launch GUI
 ```sh
-python src/gui/mode_selection_ui.py
+python src/stacked_gui/app.py
 ```
 
 ## TODO
-### 1. Add in Task 2
 
-### 2. Modify UI to have BACK button
-
-### 3. Configure the config.yaml
-
-### 4. Add in VLM for Task 1 (For fun)
-
-### 5. Add Performance Evaluation
+### 1. Add Performance Evaluation
 Implement evaluation scripts in src/evaluation/.
 Prepare benchmark questions and expected answers.
 Automate accuracy or correctness measurement.
 
-### 6. Document and Report
+### 2. Document and Report
 Keep your README updated.
 Write your project report with methodology, results, and challenges.
 Comment your code well.
