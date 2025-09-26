@@ -70,13 +70,14 @@ RecipeChatBot/
 │  │  └─ utils.py                # Helper functions (logging, config loading) TODO
 │  ├─ evaluation/
 │  │  ├─ __init__.py
-│  │  ├─ evaluator.py            # Performance evaluation scripts
+│  │  ├─ evaluator.py            # Task 3 Performance evaluation class
 │  │  └─ benchmarks/             # Sample questions and gold answers
 │  └─ scripts/
 │     ├─ __init__.py
 │     ├─ run_ui.py               # Script to launch the main UI (mode_selection_ui)
 │     ├─ run_terminal_chat.py   # CLI chat interface
-│     └─ download_models.py     # Scripts to download large models if needed
+│     ├─ download_models.py     # Scripts to download large models if needed
+│     └─ evaluate.py               # Task 3 Performance evaluation script
 ├─ tests/
 │  ├─ test_nlu.py               # Unit tests for NLU functions
 │  ├─ test_knowledge.py         # Unit tests for recipe lookup
@@ -108,3 +109,20 @@ Automate accuracy or correctness measurement.
 Keep your README updated.
 Write your project report with methodology, results, and challenges.
 Comment your code well.
+
+### 3. Run with CUDA
+
+To run GPT4All with CUDA support, ensure your system has the following:
+
+- A compatible NVIDIA GPU
+- CUDA and Vulkan SDK installed and properly configured
+
+#### Building from Source
+
+GPT4All must be built from source to enable CUDA support. Follow the instructions in the [GPT4All PyPI page](https://pypi.org/project/gpt4all/) under the "Local Build" section.
+
+> **Note:** Version `v3.4.2` is recommended, as it has been tested. Some newer versions may contain bugs.  
+
+You can switch to this version using:
+
+```git checkout v3.4.2```
