@@ -84,7 +84,7 @@ class Evaluator:
             gold = self.normalize_gold(item[self.field_map["answer"]])
             if pred == gold:
                 correct += 1
-            ## To print faliure case
+            ### To print faliure case
             # else:
             #     print(f"prompt: {prompt}\nresponse: {response}\ntrue answer: {gold}")
         return correct / self.sample_size
