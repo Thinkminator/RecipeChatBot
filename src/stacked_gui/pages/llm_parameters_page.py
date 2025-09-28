@@ -51,11 +51,11 @@ class LLMParametersPage(BasePage):
         self.repetition_penalty_var = tk.DoubleVar(value=1.0)
         ttk.Spinbox(frame, from_=0.0, to=2.0, increment=0.01, textvariable=self.repetition_penalty_var, width=10).grid(row=3, column=3, sticky="w", pady=(10,0))
 
-        ttk.Label(frame, text="Global Prompt:").grid(row=4, column=0, sticky="nw", pady=(10,0))
+        ttk.Label(frame, text="Global \nPrompt:").grid(row=4, column=0, sticky="nw", pady=(10,0))
         self.global_prompt_text = tk.Text(frame, height=4, width=70)
         self.global_prompt_text.grid(row=4, column=1, columnspan=3, sticky="ew", pady=(10,0))
 
-        ttk.Label(frame, text="Negative Prompt:").grid(row=5, column=0, sticky="nw", pady=(10,0))
+        ttk.Label(frame, text="Negative \nPrompt:").grid(row=5, column=0, sticky="nw", pady=(10,0))
         self.negative_prompt_text = tk.Text(frame, height=4, width=70)
         self.negative_prompt_text.grid(row=5, column=1, columnspan=3, sticky="ew", pady=(10,0))
 
