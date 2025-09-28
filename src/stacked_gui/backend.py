@@ -25,6 +25,7 @@ try:
     from src.core.custom_llm import generate_recipe_from_ingredients
     from src.core.vlm import infer_dish_from_image
     from src.core.llm_adapter import gpt4all_model_list, LLMInterface
+    from src.core.mllm import MLLMInterface, infer_dish_from_image
     from gpt4all import GPT4All
 except ModuleNotFoundError as e:
     # As a convenience, also try without the 'src.' prefix in case your package
@@ -35,6 +36,7 @@ except ModuleNotFoundError as e:
         from core.themealdb_api import query_themealdb
         from core.custom_llm import generate_recipe_from_ingredients
         from core.vlm import infer_dish_from_image
+        from core.mllm import MLLMInterface, infer_dish_from_image
         from gpt4all import GPT4All
         from src.core.llm_adapter import gpt4all_model_list, LLMInterface
     except ModuleNotFoundError:
@@ -81,7 +83,41 @@ def _get_gpt4all_instance(app_state=None):
     )
     return _gpt4all_instance
 
-def generate_bot_reply(mode: str, user_text: str, *, app_state: dict = None) -> str:
+def _get_mllm_instance(app_state=None):
+    global _mllm_instance
+    if GPT4All is None or MLLMInterface is None:
+        raise RuntimeError("GPT4All or MLLMInterface not available")
+
+    params = app_state.get("llm_params", {}) if app_state else {}
+    model_name = params.get("model")
+    if not model_name:
+        raise RuntimeError("No GPT4All model selected")
+
+    print(f"DEBUG: Using GPT4All model for MLLM: {model_name}")
+
+    try:
+        model = GPT4All(model_name)  # This will download if not found
+    except Exception as e:
+        raise RuntimeError(f"Failed to load or download GPT4All model '{model_name}': {e}")
+
+    generate_kwargs = {
+        "temp": params.get("temp", 0.7),
+        "top_k": params.get("top_k", 40),
+        "top_p": params.get("top_p", 0.9),
+        "max_tokens": params.get("max_tokens", 200),
+        "repeat_penalty": params.get("repeat_penalty", 1.18),
+    }
+
+    _mllm_instance = MLLMInterface(
+        model,
+        max_turns=params.get("max_turns", 100),
+        global_prompt=params.get("global_prompt", "You are a helpful cooking assistant, return only recipe in 1 paragraph."),
+        negative_prompt=params.get("negative_prompt", "Avoid: Too long"),
+        **generate_kwargs
+    )
+    return _mllm_instance
+
+def generate_bot_reply(mode: str, user_text: str, *, app_state: dict = None, image_path: str = None) -> str:
     """Route to your real backends based on selected mode."""
     mode = (mode or "").strip() or "existing_recipe"
     if mode == "existing_recipe":
@@ -99,6 +135,12 @@ def generate_bot_reply(mode: str, user_text: str, *, app_state: dict = None) -> 
             return llm.generate(user_text)
         except Exception as e:
             return f"Error with GPT4All model: {e}"
+    elif mode == "mllm_interface":
+        try:
+            mllm = _get_mllm_instance(app_state=app_state)
+            return mllm.generate(user_input=user_text, image_path=image_path)
+        except Exception as e:
+            return f"Error with MLLMInterface model: {e}"
     else:
         return f"[{mode}] {user_text}"
 

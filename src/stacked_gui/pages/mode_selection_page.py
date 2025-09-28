@@ -20,7 +20,7 @@ class ModeSelectionPage(BasePage):
 
         def go(mode):
             self.app.state["mode"] = mode
-            if mode == "llm_interface":
+            if mode == "llm_interface" or mode == "mllm_interface":
                 self.app.show("LLMParametersPage", mode=mode)
             else:
                 self.app.show("InputTypePage", mode=mode)
@@ -30,6 +30,7 @@ class ModeSelectionPage(BasePage):
             ("TheMealDB", "themealdb"),
             ("Custom Model", "custom_model"),
             ("LLM Interface", "llm_interface"),
+            ("MLLM Interface", "mllm_interface"),
         ]
         for label, mode in modes:
             ttk.Button(btns, text=label, width=24, style="Big.TButton", command=lambda m=mode: go(m)).pack(pady=8)

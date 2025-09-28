@@ -92,4 +92,7 @@ class LLMParametersPage(BasePage):
         }
         self.app.state["llm_params"] = params
         messagebox.showinfo("Saved", "LLM parameters saved.")
-        self.app.show("InputTypePage", mode=self.selected_mode)
+        if self.selected_mode == "mllm_interface":
+            self.app.show("MLLMPage", mode=self.selected_mode)
+        else:
+            self.app.show("InputTypePage", mode=self.selected_mode)

@@ -6,6 +6,7 @@ from .text_page import TextPage
 from .speech_page import SpeechPage
 from .image_page import ImagePage
 from .llm_parameters_page import LLMParametersPage
+from .mllm_page import MLLMPage
 
 __all__ = [
     "BasePage",
@@ -15,4 +16,5 @@ __all__ = [
     "SpeechPage",
     "ImagePage",
     "LLMParametersPage",
+    "MLLMPage",
 ]

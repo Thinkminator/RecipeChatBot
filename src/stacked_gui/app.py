@@ -6,7 +6,7 @@ Run:  python app.py
 """
 import tkinter as tk
 from tkinter import ttk
-from pages import ModeSelectionPage, InputTypePage, TextPage, SpeechPage, ImagePage, LLMParametersPage
+from pages import ModeSelectionPage, InputTypePage, TextPage, SpeechPage, ImagePage, LLMParametersPage, MLLMPage
 
 class App(tk.Tk):
     def __init__(self):
@@ -30,7 +30,7 @@ class App(tk.Tk):
         self.current = None
 
         # Register pages
-        for P in (ModeSelectionPage, InputTypePage, TextPage, SpeechPage, ImagePage, LLMParametersPage):
+        for P in (ModeSelectionPage, InputTypePage, TextPage, SpeechPage, ImagePage, LLMParametersPage, MLLMPage):
             page = P(self.container, self)
             self.pages[P.__name__] = page
             page.grid(row=0, column=0, sticky="nsew")
