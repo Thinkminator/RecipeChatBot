@@ -5,6 +5,7 @@ from backend import generate_bot_reply, speak_text
 import os
 from PIL import Image, ImageTk
 import threading
+import pyttsx3
 
 class ImagePage(BasePage):
     def __init__(self, parent, app):
@@ -44,6 +45,7 @@ class ImagePage(BasePage):
         self.image_refs = []
 
         self.engine = None
+        self.speaking = False
         try:
             import pyttsx3
             self.engine = pyttsx3.init()
@@ -142,6 +144,22 @@ class ImagePage(BasePage):
     def on_show(self, **_):
         mode = self.app.state.get("mode") or "—"
         self.title_var.set(f"Text Interface — {mode.replace('_', ' ').title()}")
+
+    def _speak_run(self):
+        try:
+            # Always create a fresh engine
+            self.engine = pyttsx3.init()
+            self.engine.say(self._last_reply)
+            self.engine.runAndWait()
+        except Exception as e:
+            print("TTS error:", e)
+        self.after(0, self._stop_speaking_cleanup)
+
+    def _stop_speaking_cleanup(self):
+        self.speaking = False
+        self.speak_btn.config(text="🔊 Speak")
+        self.speak_btn.state(["!disabled"])  # Ensure button remains enabled
+        self.engine = None  # Clear reference
 
     def on_clear(self):
     #  stop any ongoing speech and reset the Speak button

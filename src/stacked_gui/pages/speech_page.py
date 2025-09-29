@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, scrolledtext, messagebox
 from .base_page import BasePage
 from backend import generate_bot_reply, speak_text
-
+import pyttsx3
 try:
     import speech_recognition as sr
 except Exception:
@@ -42,6 +42,7 @@ class SpeechPage(BasePage):
         self.chat.tag_config("bot", foreground="green", spacing3=8)
         self.chat.config(state="disabled")
 
+        self.speaking =False
         self._listening = False
         self._last_reply = None
 
@@ -113,6 +114,22 @@ class SpeechPage(BasePage):
             ok = speak_text(self._last_reply)
             if not ok:
                 messagebox.showwarning("TTS not available", "pyttsx3 not installed.")
+
+    def _speak_run(self):
+        try:
+            # Always create a fresh engine
+            self.engine = pyttsx3.init()
+            self.engine.say(self._last_reply)
+            self.engine.runAndWait()
+        except Exception as e:
+            print("TTS error:", e)
+        self.after(0, self._stop_speaking_cleanup)
+
+    def _stop_speaking_cleanup(self):
+        self.speaking = False
+        self.speak_btn.config(text="🔊 Speak")
+        self.speak_btn.state(["!disabled"])  # Ensure button remains enabled
+        self.engine = None  # Clear reference
 
     def on_clear(self):
     # (optional) stop any ongoing speech and reset the Speak button
