@@ -12,7 +12,7 @@ RecipeChatBot is a desktop GUI application (Tkinter) that generates cooking reci
 - List of recipes in datasets
 - Hugging Face API (Not working)
 - Hugging Face T5-based recipe generation model ([flax-community/t5-recipe-generation](https://huggingface.co/flax-community/t5-recipe-generation))
-- [Task 2] TODO <br />
+- GPT4All-based terminal multi-turn chat with local LLMs <br />
 
 The app supports both text and speech interfaces. The architecture separates GUI, NLU/knowledge logic, and model inference so you can run the model locally (PyTorch) or fall back to Hugging Face remote inference.
 
