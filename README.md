@@ -55,11 +55,17 @@ RecipeChatBot/
 ├─ src/
 │  ├─ __init__.py                # Marks src as a package
 │  ├─ stacked_gui/
-│  │  ├─ __init__.py
-│  │  ├─ mode_selection_ui.py   # Main UI: select mode (recipe, HF, Custom Model, Task2)
-│  │  ├─ input_type_ui.py        # UI: select input type (Text or Speech)
-│  │  ├─ text_interface.py       # Text input chat window & logic
-│  │  └─ speech_interface.py     # Speech input chat window & logic
+│  │  ├── app.py                    # Router (single Tk root), entry point
+│  │  ├── backend.py             # Shared logic (tries to import your real
+│  │  └── pages/
+│  │       ├── __init__.py
+│  │       ├── base_page.py       # BasePage with Back button & header
+│  │       ├── mode_selection_page.py # Page selection for Task1 models, Task 2 model
+│  │       ├── input_type_page.py # Select text/Audio/Image input page to the model
+│  │       ├── llm_parameter_page.py  # Setting page for Task 2 model parameters
+│  │       ├── text_page.py  # Text input page to interact with different models
+│  │       ├── speech_page.py  # Audio input page to interact with different models
+│  │       ├── image_page.py  # Image input page to interact with different models
 │  ├─ core/
 │  │  ├─ __init__.py
 │  │  ├─ nlu.py                  # Natural Language Understanding (dish extraction)
