@@ -8,5 +8,6 @@ from src.core.llm_adapter import gpt4all_model_list, LLMInterface
 
 if __name__ == "__main__":
     model = GPT4All(gpt4all_model_list[2])
-    llm = LLMInterface(model, global_prompt="Always answer 'yes' in this conversion.")
+    print(f"model: f{gpt4all_model_list[2]}")
+    llm = LLMInterface(model, max_tokens=100)
     llm.chat()

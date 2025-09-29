@@ -34,15 +34,18 @@ The app supports both text and speech interfaces. The architecture separates GUI
 - Presents the recipe in a simple GUI and allows voice I/O
 
 ### 4. Task 2
-- Accepts a recipe request from the user (text or speech or image) via [custom_llm.py](src\core\custom_llm.py)
-- TODO
-- Presents the recipe in a simple GUI and allows voice I/O
+- Run multi-turn chat via [run_terminal_chat.py](src\scripts\run_terminal_chat.py)
+- Implements a terminal-based chat loop where user inputs are confirmed with the ENTER key
+- Supports context retention across multiple turns
+- Demonstrates correct Terminal operation and interaction flow
+
+### 5. Task 3
+- Run evaluation via [evaluate.py](src\scripts\evaluate.py)
+- Test different pretrained models on benchmark datasets (e.g., BoolQ, PIQA) for reading comprehension and commonsense reasoning
+- Collect accuracy and performance metrics for systematic comparison across models
 
 ### Extra. VLM-Integrated Prompting
 - Accept recipes searching with [pictures](src\core\vlm.py)
-
-### 4. Task 2
-TODO
 
 ## File Structure
 ```
@@ -104,18 +107,6 @@ Launch GUI
 python src/stacked_gui/app.py
 ```
 
-## TODO
-
-### 1. Add Performance Evaluation
-Implement evaluation scripts in src/evaluation/.
-Prepare benchmark questions and expected answers.
-Automate accuracy or correctness measurement.
-
-### 2. Document and Report
-Keep your README updated.
-Write your project report with methodology, results, and challenges.
-Comment your code well.
-
 ### 3. Run with CUDA
 
 To run GPT4All with CUDA support, ensure your system has the following:
@@ -132,3 +123,15 @@ GPT4All must be built from source to enable CUDA support. Follow the instruction
 You can switch to this version using:
 
 ```git checkout v3.4.2```
+
+## TODO
+
+### 1. Add Performance Evaluation
+Implement evaluation scripts in src/evaluation/.
+Prepare benchmark questions and expected answers.
+Automate accuracy or correctness measurement.
+
+### 2. Document and Report
+Keep your README updated.
+Write your project report with methodology, results, and challenges.
+Comment your code well.
