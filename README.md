@@ -8,7 +8,7 @@ A desktop GUI application for generating cooking recipes using various methods. 
 - [File Structure](#file-structure)
 
 ## Project Overview
-RecipeChatBot is a desktop GUI application (Tkinter) that generates cooking recipes from 4 methods:
+RecipeChatBot is a desktop GUI application (Tkinter) that generates cooking recipes from 5 methods:
 - List of recipes in datasets
 - TheMealDB API
 - Hugging Face T5-based recipe generation model ([flax-community/t5-recipe-generation](https://huggingface.co/flax-community/t5-recipe-generation))
@@ -62,8 +62,8 @@ RecipeChatBot/
 ├─ src/
 │  ├─ __init__.py                # Marks src as a package
 │  ├─ stacked_gui/
-│  │   ├── app.py                    # Router (single Tk root), entry point
-│  │   ├── backend.py             # Shared logic (tries to import your real pages)
+│  │   ├── app.py                     # Router (single Tk root), entry point
+│  │   ├── backend.py                 # Shared logic (tries to import your real pages)
 │  │   ├─ __init__.py
 │  │   ├─ base_page.py                # BasePage with Back button & header
 │  │   ├─ mode_selection_page.py      # Page selection for Task1 models, Task 2 model
